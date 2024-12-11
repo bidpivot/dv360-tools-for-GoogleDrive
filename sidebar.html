@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+  </head>
+  <body>
+    <form id="reportForm" onsubmit="handleSubmit(event)">
+      <label for="reports">Choose a report:</label>
+      <select id="reports" name="reports">
+        <? for (var i = 0; i < reports.length; i++) { ?>
+        <option value="<?= JSON.stringify(reports[i]) ?>">
+          <?= reports[i].name ?>
+        </option>
+        <? } ?>
+      </select>
+      <br /><br />
+      <input type="submit" value="Submit" />
+    </form>
+    <script>
+      function handleSubmit(event) {
+        event.preventDefault();
+        const selectedReportJson = document.getElementById("reports").value;
+        const selectedReportObj = JSON.parse(selectedReportJson);
+        google.script.run
+          .withSuccessHandler(closeSidebar)
+          .processReport(selectedReportObj);
+      }
+
+      function closeSidebar() {
+        google.script.host.close();
+      }
+    </script>
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+  </head>
+  <body>
+    <form>
+      <label for="reports">Choose a report:</label>
+      <select id="reports" name="reports">
+        <? for (var i = 0; i < reports.length; i++) { ?>
+        <option value="<?= reports[i].id ?>">
+          <?= reports[i].name ?>
+        </option>
+        <? } ?>
+      </select>
+      <br /><br />
+      <input
+        type="button"
+        value="Submit"
+        onclick="google.script.run.withSuccessHandler(closeSidebar).processReportSelection(this.parentNode)"
+      />
+    </form>
+    <script>
+      function closeSidebar() {
+        google.script.host.close();
+      }
+    </script>
+  </body>
+</html> -->

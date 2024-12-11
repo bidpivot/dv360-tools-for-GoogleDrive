@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <script>
+      function selectFolder(folderId) {
+        google.script.run
+          .withSuccessHandler(function () {
+            google.script.host.close();
+          })
+          .handleFolderSelection(folderId);
+      }
+    </script>
+  </head>
+  <body>
+    <h3>Select a Folder</h3>
+    <div id="folderList"></div>
+    <script>
+      google.script.run
+        .withSuccessHandler(function (folders) {
+          var folderList = document.getElementById("folderList");
+          folders.forEach(function (folder) {
+            var folderItem = document.createElement("div");
+            folderItem.innerHTML =
+              "<button onclick=\"selectFolder('" +
+              folder.id +
+              "')\">" +
+              folder.name +
+              "</button>";
+            folderList.appendChild(folderItem);
+          });
+        })
+        .getFolders();
+    </script>
+  </body>
+</html>
