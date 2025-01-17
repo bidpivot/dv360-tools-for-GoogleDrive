@@ -2,7 +2,7 @@ function postAssetChunked(
   row: Interfaces.CreativeRow
 ): Interfaces.AssetApiResponse {
   console.log("Row data for uploadAsset Function: ", row);
-  const advertiserId = row["Advertiser ID"]; // validate this as a string
+  const advertiserId = row["Advertiser ID"];
   const fileId = row["File ID"];
   console.log("Defining file from DriveApp with fileId");
   const file = DriveApp.getFileById(fileId);

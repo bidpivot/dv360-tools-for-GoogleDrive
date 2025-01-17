@@ -1,5 +1,4 @@
-// I am keeping this as a vanilla JS file because the namespace overcomplicates the getOAuthService Function which I use everywhere
-// in places that I am using this for api calls, I am going to ask TS to ignore the error
+// I am keeping this as a vanilla JS file because the namespace overcomplicates the getOAuthService Function which is used everywhere
 
 function getOAuthService() {
   const clientId = CONFIG.clientId;

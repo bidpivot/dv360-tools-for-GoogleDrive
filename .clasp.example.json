@@ -1,7 +1,7 @@
-// this file should be created for you by `clasp init`
-// but you need to put in your scriptId from the project settings of the Apps Script proect
+// this file will be created for you by `clasp create`
+// if you already created the apps script project, the you need to run `clasp clone [options] [scriptId] [versionNumber]`
 
 {
-  "scriptId": "",
+  "scriptId": "SCRIPTID_SHOULD_MATCHA_YOUR_PROJECT",
   "rootDir": ""
 }
