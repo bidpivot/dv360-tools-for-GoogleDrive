@@ -2,3 +2,5 @@ config.js
 config.ts
 configNamespace.ts
 notes.md
+.clasp.json
+node_modules/*
