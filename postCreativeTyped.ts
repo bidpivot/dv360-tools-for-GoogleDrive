@@ -11,47 +11,7 @@
 // build out pre-built reports templates that the user can import into the sheet with a dropdown call
 // pacing; publishers, performance pivot report
 // adjust api call to include native ad format
-// validate that file id begins with 1 and advertiser ID begins wwith 66, landping page is a http://
-// validate that mediaId (if it's already there) begins with 1
-// catch all errors
-
-// function onInstall(e) {
-//   console.log('onInstall triggered');
-//   onOpen(e)
-// }
-
-function onOpen() {
-  console.log("onOpen triggered");
-  const ui = SpreadsheetApp.getUi();
-
-  // Create sub-menus
-  const connectMenu = ui
-    .createMenu("DV360 Connection")
-    .addItem("Connect To DV360", "authorize")
-    .addItem("Disconnect from DV360", "clearService");
-
-  const creativeMenu = ui
-    .createMenu("Creatives")
-    .addItem("Send Creatives to DV360", "masterPostCreativeLogic")
-    .addItem("Import Assets From Drive to Sheets", "menuPullinDriveFiles");
-
-  const reportingMenu = ui
-    .createMenu("Reporting")
-    .addItem("Import Report to Drive", "menuFetchReportToDriveFolder")
-    .addItem("Import Report To Current Spreadsheet", "menuFetchReportToSheet");
-  // .addItem("Show Sidebar", "showSidebar");
-
-  // Create the main menu and add sub-menus
-  ui.createAddonMenu()
-    .addSubMenu(connectMenu)
-    .addSubMenu(creativeMenu)
-    .addSubMenu(reportingMenu)
-    .addToUi();
-}
-
-function testLogic() {
-  masterPostCreativeLogic(Config.constVars.exampleSheetId);
-}
+// make sure there aren't any errors that are still not handled
 
 function masterPostCreativeLogic(id = "") {
   const ui = SpreadsheetApp.getUi();
@@ -61,12 +21,12 @@ function masterPostCreativeLogic(id = "") {
 
   // Display an alert message to the user
   ui.alert(
-    "Please do not edit or click away from this tab while the sheet is uploading. Press 'ok' and the upload process will begin."
+    "Please do not edit or click away from this tab while the sheet is uploading. \n\nPress 'ok' and the upload process will begin."
   );
 
   // Display a toast message
   spreadsheet.toast(
-    "The post process is underway. Please do not edit this sheet or close this window until it's compeleted.  You can leave this window open and use other applications while you wait for the process to complete.",
+    "The post process is underway. Please do not edit this sheet or close this window until it's compeleted.  You may use other applications.",
     "Processing",
     -1
   );
@@ -382,8 +342,10 @@ function validateRow(row: Interfaces.CreativeRow): string | null {
 
 // Helper Function to check files size and return error
 function checkFileSize(row: Interfaces.CreativeRow): boolean {
-  const threshold = Config.constVars.chunkSize; // the threshold needs to be the same as chunksize
+  const threshold = Config.constVars.chunkSize;
+  // the threshold needs to be the same as chunksize for the chunked post function
   // if you want to change the size of the chunk or the threshold, change it in the Config namespace file
+  // if not you will create an error if you try to post a file that is smaller than the initial chunk.
   console.log(
     "Checking file size to see if it is greather than chunk size of: ",
     threshold
@@ -393,7 +355,11 @@ function checkFileSize(row: Interfaces.CreativeRow): boolean {
   const fileSize = file.getSize();
   console.log("File Size: ", HelperFunction.formatBytes(fileSize));
   if (fileSize > threshold) {
+    console.log(
+      "File is greater than chunksize and will be posted via chunk method"
+    );
     return true;
   }
+  console.log("File is less than chunksize and will be sent in one request");
   return false;
 }
