@@ -17,3 +17,9 @@ function showTriggerSidebar(report: UserAppData.obj) {
   const output = html.evaluate().setTitle("Schedule A Report");
   SpreadsheetApp.getUi().showSidebar(output);
 }
+
+function showAuthSidebar(htmlTemplate: GoogleAppsScript.HTML.HtmlTemplate) {
+  // console.log("Triggers Array: ", triggers);
+  const output = htmlTemplate.evaluate().setTitle("Authorize for DV360");
+  SpreadsheetApp.getUi().showSidebar(output);
+}

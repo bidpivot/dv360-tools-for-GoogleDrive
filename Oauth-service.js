@@ -29,9 +29,13 @@ function authCallback(request) {
   const service = getOAuthService();
   const isAuthorized = service.handleCallback(request);
   if (isAuthorized) {
-    return HtmlService.createHtmlOutput("Success! You can close this tab.");
+    return HtmlService.createHtmlOutput(
+      "Success! You have now authorized DV360 Tools to connect to your DV360 account.\n\nYou can close this tab."
+    );
   } else {
-    return HtmlService.createHtmlOutput("Denied. You can close this tab");
+    return HtmlService.createHtmlOutput(
+      "Unfortunately, the authorization was not successful.\n\nPlease confirm your google account email matches the email used to log into DV360 and try again."
+    );
   }
 }
 
@@ -55,14 +59,19 @@ function authorize() {
       .setHeight(150)
       .setSandboxMode(HtmlService.SandboxMode.IFRAME);
 
+    showAuthSidebar(template);
+
     // Show the HTML dialog
-    SpreadsheetApp.getUi().showModalDialog(
-      htmlOutput,
-      "Authorization Required"
-    );
+    // SpreadsheetApp.getUi().showModalDialog(
+    //   htmlOutput,
+    //   "Authorization Required"
+    // );
   } else {
     console.log(
       "User already has access and their Drive account is authorized"
+    );
+    SpreadsheetApp.getUi().showModalDialog(
+      "You have already authorized the use of the DV360 Tools add-on.\n\nYou may close this dialog and proceed to use the functions available from the menu dropdown."
     );
   }
 }
