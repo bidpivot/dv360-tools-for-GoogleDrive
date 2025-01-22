@@ -51,6 +51,7 @@ function authorize() {
     // Create the HTML template and pass the authorization URL
     const template = HtmlService.createTemplateFromFile("AuthorizationDialog");
     template.authorizationUrl = authorizationUrl;
+    template.timeout = 30000; // 30 seconds
 
     // Evaluate the template to create the HTML output
     const htmlOutput = template
@@ -59,13 +60,13 @@ function authorize() {
       .setHeight(150)
       .setSandboxMode(HtmlService.SandboxMode.IFRAME);
 
-    showAuthSidebar(template);
+    // showAuthSidebar(template);
 
     // Show the HTML dialog
-    // SpreadsheetApp.getUi().showModalDialog(
-    //   htmlOutput,
-    //   "Authorization Required"
-    // );
+    SpreadsheetApp.getUi().showModalDialog(
+      htmlOutput,
+      "Authorization Required"
+    );
   } else {
     console.log(
       "User already has access and their Drive account is authorized"

@@ -6,28 +6,13 @@
   <body>
     <p>Open the following URL to give your spreadsheet access to DV360:</p>
     <a href="<?= authorizationUrl ?>" target="_blank">Authorize</a>
-    <!-- <script>
-      function handleSubmit(event) {
-        event.preventDefault();
-
-        // Capture all form data
-        const form = document.getElementById("triggerForm");
-        const formData = new FormData(form);
-        console.log({ formData });
-        const formObject = {};
-        formData.forEach((value, key) => {
-          formObject[key] = value;
-        });
-
-        // Pass the form data to the server-side function
-        google.script.run
-          .withSuccessHandler(closeSidebar)
-          .createTimeDrivenTrigger(formObject);
-      }
-
-      function closeSidebar() {
+    <script>
+      function closeDialog() {
         google.script.host.close();
       }
-    </script> -->
+
+      // Close the dialog after the specified timeout
+      setTimeout(closeDialog, <?= timeout ?>);
+    </script>
   </body>
 </html>
