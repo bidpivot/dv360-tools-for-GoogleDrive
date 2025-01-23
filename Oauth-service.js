@@ -71,9 +71,10 @@ function authorize() {
     console.log(
       "User already has access and their Drive account is authorized"
     );
-    SpreadsheetApp.getUi().showModalDialog(
-      "You have already authorized the use of the DV360 Tools add-on.\n\nYou may close this dialog and proceed to use the functions available from the menu dropdown."
+    const htmlOutput = HtmlService.createHtmlOutput(
+      "Good News!  You have already authorized the use of the DV360 Tools add-on.  You may close this dialog and proceed to use the functions available from the menu dropdown."
     );
+    SpreadsheetApp.getUi().showModalDialog(htmlOutput, "Authorization");
   }
 }
 
@@ -81,6 +82,29 @@ function clearService() {
   const service = getOAuthService();
   service.reset();
   console.log("authorization service with DV360 has been disconnected");
+}
+
+function checkAuth() {
+  const service = getOAuthService();
+  if (!service.hasAccess()) {
+    console.log("User does not have access to DV360 yet");
+    const htmlOutput = HtmlService.createHtmlOutput(
+      "You are NOT currently connected to DV360.  Run the 'Connect to DV360' option from the dropdown menu if you would like to connect."
+    );
+    SpreadsheetApp.getUi().showModalDialog(
+      htmlOutput,
+      "Authorization Check: Disconnected"
+    );
+  } else {
+    console.log("User does not have access to DV360 yet");
+    const htmlOutput = HtmlService.createHtmlOutput(
+      "You are already connected to DV360. You can start using it by selecting functions from the dropdown menu"
+    );
+    SpreadsheetApp.getUi().showModalDialog(
+      htmlOutput,
+      "Authorization Check: Connected"
+    );
+  }
 }
 
 function reauthorize() {

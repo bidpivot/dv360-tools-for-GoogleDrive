@@ -6,13 +6,14 @@
   <body>
     <p>Open the following URL to give your spreadsheet access to DV360:</p>
     <a href="<?= authorizationUrl ?>" target="_blank">Authorize</a>
-    <script>
+    <p>If you have already authorized, then you may close this window.</p>
+    <!-- <script>
       function closeDialog() {
         google.script.host.close();
       }
 
       // Close the dialog after the specified timeout
       setTimeout(closeDialog, <?= timeout ?>);
-    </script>
+    </script> -->
   </body>
 </html>

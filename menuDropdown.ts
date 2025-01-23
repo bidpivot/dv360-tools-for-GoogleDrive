@@ -6,7 +6,8 @@ function onOpen() {
   const connectMenu = ui
     .createMenu("DV360 Authorization")
     .addItem("Connect To DV360", "authorize")
-    .addItem("Disconnect from DV360", "clearService");
+    .addItem("Disconnect from DV360", "clearService")
+    .addItem("Check DV360 Connection", "checkAuth");
 
   const creativeMenu = ui
     .createMenu("Creatives")
